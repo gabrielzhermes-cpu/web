@@ -3,10 +3,9 @@
 int main() {
     // Sem acentos, compilador com problemas ao exibir
     // Declaracao das variaveis
-    int casasTorre = 4;   // A Torre se movera 4 casas
-    int casasBispo = 5;   // O Bispo se movera 5 casas
-    int casasRainha = 8;  // A Rainha se movera 8 casas
-    int i; // Variavel de controle para os loops
+      int casasTorre = 5, casasBispo = 5, casasRainha = 8; // Numero de casas que cada peca se movera
+    int movimentosVerticais = 2, movimentosHorizontais = 1; // Movimento do Cavalo: duas casas para baixo e uma para a esquerda
+    int i, j; // Variaveis de controle para os loops
 
     // TORRE
     // Movimento: 4 casas para a DIREITA
@@ -26,7 +25,7 @@ int main() {
         i++;
     }
 
-    // =============================== RAINHA ===============================
+    //  RAINHA 
     // Movimento: 8 casas para a ESQUERDA
     // Estrutura utilizada: DO-WHILE
     printf("\nMovimento da Rainha (8 casas para a esquerda):\n");
@@ -35,6 +34,21 @@ int main() {
         printf("Casa %d: Esquerda\n", i);
         i++;
     } while (i <= casasRainha);
+    //  CAVALO 
+    // Movimento: duas casas para BAIXO e uma para a ESQUERDA
+    // Estrutura utilizada: FOR (externo) + WHILE (interno)
+    // O loop interno faz as duas casas verticais (para baixo)
+    // e o loop externo executa o movimento horizontal (para a esquerda)
+    printf("\nMovimento do Cavalo (duas casas para baixo e uma para a esquerda):\n");
+
+    for (i = 1; i <= movimentosHorizontais; i++) {
+        j = 1;
+        while (j <= movimentosVerticais) {
+            printf("Casa %d: Baixo\n", j);
+            j++;
+        }
+        printf("Casa 3: Esquerda\n");
+    }
 
     printf("\nSimulacao concluida com sucesso!\n");
 
