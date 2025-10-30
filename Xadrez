@@ -1,0 +1,42 @@
+#include <stdio.h>
+
+int main() {
+    // Sem acentos, compilador com problemas ao exibir
+    // Declaracao das variaveis
+    int casasTorre = 4;   // A Torre se movera 4 casas
+    int casasBispo = 5;   // O Bispo se movera 5 casas
+    int casasRainha = 8;  // A Rainha se movera 8 casas
+    int i; // Variavel de controle para os loops
+
+    // TORRE
+    // Movimento: 4 casas para a DIREITA
+    // Estrutura utilizada: FOR
+    printf("Movimento da Torre (4 casas para a direita):\n");
+    for (i = 1; i <= casasTorre; i++) {
+        printf("Casa %d: Direita\n", i);
+    }
+
+    // BISPO
+    // Movimento: 5 casas na diagonal para CIMA e DIREITA
+    // Estrutura utilizada: WHILE
+    printf("\nMovimento do Bispo (5 casas na diagonal para cima e a direita):\n");
+    i = 1;
+    while (i <= casasBispo) {
+        printf("Casa %d: Cima, Direita\n", i);
+        i++;
+    }
+
+    // =============================== RAINHA ===============================
+    // Movimento: 8 casas para a ESQUERDA
+    // Estrutura utilizada: DO-WHILE
+    printf("\nMovimento da Rainha (8 casas para a esquerda):\n");
+    i = 1;
+    do {
+        printf("Casa %d: Esquerda\n", i);
+        i++;
+    } while (i <= casasRainha);
+
+    printf("\nSimulacao concluida com sucesso!\n");
+
+    return 0;
+}
