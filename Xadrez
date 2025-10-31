@@ -1,56 +1,126 @@
 #include <stdio.h>
 
+/*  PROTOTIPOS (funcoes) */
+void moverTorreDireitaRec(int casas);            // Torre: recursao (Direita)
+void moverBispoCimaDireitaRec(int casas);        // Bispo: recursao (Cima, Direita)
+void moverRainhaEsquerdaRec(int casas);          // Rainha: recursao (Esquerda)
+
+void moverBispoLoopsAninhados(int casas);        // Bispo: loops aninhados (externo=vertical, interno=horizontal)
+void moverCavaloCimaDireitaComplexo(int up, int right); // Cavalo: loops aninhados com break/continue
+
 int main() {
     // Sem acentos, compilador com problemas ao exibir
-    // Declaracao das variaveis
-      int casasTorre = 5, casasBispo = 5, casasRainha = 8; // Numero de casas que cada peca se movera
-    int movimentosVerticais = 2, movimentosHorizontais = 1; // Movimento do Cavalo: duas casas para baixo e uma para a esquerda
-    int i, j; // Variaveis de controle para os loops
+    // Declaracao das variaveis (agrupadas por tipo)
+    int casasTorre = 4, casasBispo = 5, casasRainha = 8;  // Numero de casas para cada peca (Torre ajustada p/ 4 casas conforme comentario)
+    int movimentosVerticais = 2, movimentosHorizontais = 1; // Cavalo: 2 para cima, 1 para direita (L)
+    int up = movimentosVerticais, right = movimentosHorizontais; // aliases explicativos
 
-    // TORRE
+    // TORRE (recursao)
     // Movimento: 4 casas para a DIREITA
-    // Estrutura utilizada: FOR
+    // Estrutura utilizada: RECURSAO (substitui o for original)
     printf("Movimento da Torre (4 casas para a direita):\n");
-    for (i = 1; i <= casasTorre; i++) {
-        printf("Casa %d: Direita\n", i);
-    }
+    moverTorreDireitaRec(casasTorre);
 
-    // BISPO
+    // BISPO (recursao)
     // Movimento: 5 casas na diagonal para CIMA e DIREITA
-    // Estrutura utilizada: WHILE
-    printf("\nMovimento do Bispo (5 casas na diagonal para cima e a direita):\n");
-    i = 1;
-    while (i <= casasBispo) {
-        printf("Casa %d: Cima, Direita\n", i);
-        i++;
-    }
+    // Estrutura utilizada: RECURSAO (substitui o while original)
+    printf("\nMovimento do Bispo (5 casas na diagonal para cima e a direita) [recursao]:\n");
+    moverBispoCimaDireitaRec(casasBispo);
 
-    //  RAINHA 
+    // BISPO (loops aninhados)
+    // Externo = vertical (Cima), Interno = horizontal (Direita)
+    printf("\nMovimento do Bispo (5 casas na diagonal para cima e a direita) [loops aninhados]:\n");
+    moverBispoLoopsAninhados(casasBispo);
+
+    // RAINHA (recursao)
     // Movimento: 8 casas para a ESQUERDA
-    // Estrutura utilizada: DO-WHILE
+    // Estrutura utilizada: RECURSAO (substitui o do-while original)
     printf("\nMovimento da Rainha (8 casas para a esquerda):\n");
-    i = 1;
-    do {
-        printf("Casa %d: Esquerda\n", i);
-        i++;
-    } while (i <= casasRainha);
-    //  CAVALO 
-    // Movimento: duas casas para BAIXO e uma para a ESQUERDA
-    // Estrutura utilizada: FOR (externo) + WHILE (interno)
-    // O loop interno faz as duas casas verticais (para baixo)
-    // e o loop externo executa o movimento horizontal (para a esquerda)
-    printf("\nMovimento do Cavalo (duas casas para baixo e uma para a esquerda):\n");
+    moverRainhaEsquerdaRec(casasRainha);
 
-    for (i = 1; i <= movimentosHorizontais; i++) {
-        j = 1;
-        while (j <= movimentosVerticais) {
-            printf("Casa %d: Baixo\n", j);
-            j++;
-        }
-        printf("Casa 3: Esquerda\n");
-    }
+    // CAVALO (loops aninhados complexos)
+    // Movimento: duas casas para CIMA e uma para a DIREITA
+    // Estruturas utilizadas: FOR (externo, condicao composta) + WHILE (interno) com break/continue
+    printf("\nMovimento do Cavalo (duas casas para cima e uma para a direita):\n");
+    moverCavaloCimaDireitaComplexo(up, right);
 
     printf("\nSimulacao concluida com sucesso!\n");
-
     return 0;
+}
+
+// IMPLEMENTACO~ES: RECURSAO
+
+// Torre: imprime "Direita" 'casas' vezes de forma recursiva 
+void moverTorreDireitaRec(int casas) {
+    if (casas <= 0) return;      // caso base
+    printf("Direita\n");         // passo atual
+    moverTorreDireitaRec(casas - 1); // chamada recursiva
+}
+
+// Bispo: imprime "Cima, Direita" 'casas' vezes (diagonal)
+void moverBispoCimaDireitaRec(int casas) {
+    if (casas <= 0) return;
+    printf("Cima, Direita\n");
+    moverBispoCimaDireitaRec(casas - 1);
+}
+
+// Rainha: imprime "Esquerda" 'casas' vezes
+void moverRainhaEsquerdaRec(int casas) {
+    if (casas <= 0) return;
+    printf("Esquerda\n");
+    moverRainhaEsquerdaRec(casas - 1);
+}
+
+/* BISPO: LOOPS ANINHADOS 
+   Externo = vertical (simula subir 1 casa); Interno = horizontal (simula ir 1 casa para a direita).
+   A combinacao por iteracao imprime "Cima, Direita". */
+void moverBispoLoopsAninhados(int casas) {
+    int v, h;
+    for (v = 1; v <= casas; v++) {   // vertical (Cima) por 'casas' vezes
+        for (h = 1; h <= 1; h++) {   // horizontal (Direita) uma vez a cada passo vertical
+            printf("Cima, Direita\n");
+        }
+    }
+}
+
+/*  CAVALO: LOOPS ANINHADOS COMPLEXOS 
+    Duas casas para CIMA (up) e uma para a DIREITA (right).
+   - For com condicao composta para rodar enquanto faltar qualquer movimento.
+   - While interno decide qual movimento emitir no passo atual.
+   - Uso de 'break' apos emitir um movimento; 'continue' explicito para clareza. */
+void moverCavaloCimaDireitaComplexo(int up, int right) {
+    int movUpFeitos = 0;
+    int movRightFeitos = 0;
+
+    for ( /* init vazio */ ; (movUpFeitos < up) || (movRightFeitos < right); /* sem incremento padrao */ ) {
+        while (1) {
+            // Prioridade: completar primeiro as subidas (Cima)
+            if (movUpFeitos < up) {
+                printf("Cima\n");
+                movUpFeitos++;
+                break; // um movimento emitido neste passo
+            }
+
+            // Depois, mover para a Direita
+            if (movRightFeitos < right) {
+                // Exemplo  de controle de fluxo:
+                if (right - movRightFeitos > 1) {
+                    // Condicao artificial: se faltasse mais de 1 para a direita, poderiamos pular este ciclo
+                    // continue; // (desativado)
+                }
+                printf("Direita\n");
+                movRightFeitos++;
+                break;
+            }
+
+            // Nada a fazer neste passo
+            break;
+        }
+
+        if ((movUpFeitos >= up) && (movRightFeitos >= right)) {
+            break; // finaliza o for se todos os movimentos foram feitoss
+        }
+
+        continue; // deixa claro que voltamos ao topo do for
+    }
 }
